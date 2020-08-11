@@ -1,0 +1,25 @@
+.header {
+  position: relative;
+  margin: $margin-auto;
+  padding: 25px 0;
+  width: $desktop-container-width;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__user-information {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__went-in-like {
+    font-size: 18px;
+    line-height: 24px;
+
+    & > span {
+      font-weight: 700;
+    }
+  }
+}

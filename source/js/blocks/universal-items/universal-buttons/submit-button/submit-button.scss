@@ -1,0 +1,20 @@
+.submit-button {
+  margin: $margin-auto;
+  padding: 10px 20px;
+  display: block;
+  font-size: 24px;
+  line-height: 30px;
+  color: $white-color;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  transition: all .3s ease;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 -2px 12px 0 $black-color inset;
+  }
+
+  &:active {
+    box-shadow: 0 -2px 20px 0 $black-color inset;
+  }
+}

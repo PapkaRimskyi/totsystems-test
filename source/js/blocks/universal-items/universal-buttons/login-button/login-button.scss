@@ -1,0 +1,16 @@
+.login-button {
+  padding: 15px 25px;
+  min-width: 100px;
+  color: $white-color;
+  background-color: $twitter-color;
+  transition: background-color .3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: $twitter-state-hover;
+  }
+
+  &:active {
+    background-color: $facebook-state-hover;
+  }
+}

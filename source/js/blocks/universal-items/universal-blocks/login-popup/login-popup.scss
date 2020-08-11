@@ -1,0 +1,43 @@
+.login-popup {
+  position: absolute;
+  top: 80%;
+  padding: 20px;
+  padding-bottom: 30px;
+  width: 38%;
+  left: 50% - 38% / 2;
+  background-color: $white-color;
+  box-shadow: 0 -2px 18px 0 $black-color;
+
+  &__fieldset-name {
+    margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  &__inputs-container {
+    margin: $margin-auto;
+    margin-bottom: 20px;
+    width: 80%;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__item {
+    margin-bottom: 15px;
+  }
+
+  &__input {
+    padding: 5px 10px;
+    border: none;
+    border-top: 2px dotted transparent;
+    border-bottom: 2px solid $facebook-color;
+
+    &:hover {
+      border-top-color: $facebook-color;
+    }
+  }
+}

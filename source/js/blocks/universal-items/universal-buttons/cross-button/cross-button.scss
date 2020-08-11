@@ -1,0 +1,16 @@
+.cross-button {
+  margin-left: auto;
+  margin-bottom: 20px;
+  padding: 5px;
+  display: block;
+  transition: rotate, opacity, .2s ease;
+
+  &:hover,
+  &:focus {
+    transform: rotate(25deg);
+  }
+
+  &:active {
+    opacity: .5;
+  }
+}
