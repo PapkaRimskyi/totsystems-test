@@ -2,7 +2,6 @@ env:
   browser: true,
   es6: true
 extends: "airbnb"
-# parser: "babel-eslint"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -17,5 +16,6 @@ rules: {
   jsx-a11y/no-noninteractive-tabindex: 'off',
   react/destructuring-assignment: [0],
   react/prop-types: 0,
+  react/no-did-update-set-state: 'off',
   max-len: 'off',
 }

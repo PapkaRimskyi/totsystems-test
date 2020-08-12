@@ -17,4 +17,9 @@
   &:active {
     box-shadow: 0 -2px 20px 0 $black-color inset;
   }
+
+  &:disabled {
+    opacity: .3;
+    cursor: not-allowed;
+  }
 }

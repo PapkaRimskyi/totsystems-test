@@ -1,0 +1,15 @@
+.chat-write-message {
+  margin-bottom: 20px;
+
+  &__fieldset {
+    margin-bottom: 15px;
+    border: none;
+  }
+
+  &__message-input {
+    width: 100%;
+    font-size: 20px;
+    line-height: 26px;
+    resize: none;
+  }
+}

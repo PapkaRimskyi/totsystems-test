@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter } from 'react-router-dom';
 
 import '../sass/style.scss';
 
 import Header from './blocks/site-blocks/header/header-site';
+import Main from './blocks/site-blocks/main/main';
 
 class Index extends Component {
   constructor(props) {
@@ -28,9 +30,12 @@ class Index extends Component {
   render() {
     const { login, userName } = this.state;
     return (
-      <Header loginStatus={login} userName={userName} changeLoginStatus={this.changeLoginStatus} />
+      <>
+        <Header loginStatus={login} userName={userName} changeLoginStatus={this.changeLoginStatus} />
+        {login && <Main userName={userName} />}
+      </>
     );
   }
 }
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<HashRouter><Index /></HashRouter>, document.getElementById('root'));
