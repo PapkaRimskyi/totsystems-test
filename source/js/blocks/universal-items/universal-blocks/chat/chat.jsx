@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-no-bind */
 import React, { Component } from 'react';
 
 import ChatMessage from '../chat-message/chat-message';
@@ -8,8 +12,6 @@ export default class Chat extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { chatInfo: this.props.chatInfo };
-
     this.chatList = null;
   }
 
@@ -19,17 +21,17 @@ export default class Chat extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.chatInfo.length !== this.props.chatInfo.length) {
-      this.setState({ chatInfo: this.props.chatInfo }, scrollToBottom.bind(this, this.chatList));
+    if (prevProps.chatInfo !== this.props.chatInfo) {
+      scrollToBottom(this.chatList);
     }
   }
 
   render() {
-    const { chatInfo } = this.state;
+    const { chatInfo, userName, messageActionButtonHandler } = this.props;
     return (
       <section className="chat" aria-label="Раздел с чатом">
-        <ul className="chat__list">
-          {chatInfo.map((message) => <ChatMessage key={`${message.name}-${message.time}`} message={message} />)}
+        <ul className="chat__list" onClick={messageActionButtonHandler}>
+          {chatInfo.map((message, index) => <ChatMessage userName={userName} messageNumber={`${index}`} key={index} message={message} messageID={index} />)}
         </ul>
       </section>
     );

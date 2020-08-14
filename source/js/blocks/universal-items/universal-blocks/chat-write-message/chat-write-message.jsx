@@ -19,22 +19,37 @@ export default class ChatWriteMessage extends Component {
     if (prevProps.activeChat !== this.props.activeChat) {
       this.setState({ messageText: '' });
     }
+    if (prevProps.editModeStatus !== this.props.editModeStatus) {
+      const { editingText } = this.props.editingMessageData;
+      this.setState({ messageText: editingText });
+    }
   }
 
   onChangeText(e) {
     e.preventDefault();
-    this.setState({ messageText: e.target.value.trim() });
+    this.setState({ messageText: e.target.value });
   }
 
   submitHandler(e) {
     e.preventDefault();
-    const { addMessage, userName } = this.props;
-    const { messageText } = this.state;
-    if (messageText) {
-      const formattedUserInformation = messageFormatting(messageText, userName);
-      this.setState({ messageText: '' });
-      addMessage(formattedUserInformation);
+    const { editModeStatus } = this.props;
+    if (!editModeStatus) {
+      const { addMessage, userName } = this.props;
+      const { messageText } = this.state;
+      if (messageText) {
+        const formattedUserInformation = messageFormatting(messageText, userName);
+        this.setState({ messageText: '' });
+        addMessage(formattedUserInformation);
+      }
+    } else {
+      this.editMessageHandler();
     }
+  }
+
+  editMessageHandler() {
+    const { messageText } = this.state;
+    const { changeEditedMessage } = this.props;
+    changeEditedMessage(messageText);
   }
 
   enterKeyHandler(e) {
