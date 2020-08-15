@@ -7,6 +7,8 @@ import '../sass/style.scss';
 import Header from './blocks/site-blocks/header/header-site';
 import Main from './blocks/site-blocks/main/main';
 
+import { setItemToLocalStorage, removeItemFromLocalStorage, getItemFromLocalStorage } from './blocks/utils/local-storage-functions';
+
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -15,10 +17,19 @@ class Index extends Component {
     this.changeLoginStatus = this.changeLoginStatus.bind(this);
   }
 
+  componentDidMount() {
+    if (getItemFromLocalStorage('userName')) {
+      this.setState((prevState) => ({ userName: getItemFromLocalStorage('userName'), login: !prevState.login }));
+    }
+  }
+
   changeLoginStatus(userName) {
     const { login } = this.state;
     if (!login) {
+      setItemToLocalStorage('userName', userName);
       this.changeUserName(userName);
+    } else {
+      removeItemFromLocalStorage('userName');
     }
     this.setState((prevState) => ({ login: !prevState.login }));
   }
