@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */
-export default function ScrollToBottom(element) {
-  element.scrollTop = element.scrollHeight;
+export default function scrollToBottom(element) {
+  const elem = element;
+  elem.scrollTop = elem.scrollHeight;
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import DeleteMessageButton from '../../universal-buttons/delete-message-button/delete-message-button';
 import EditMessageButton from '../../universal-buttons/edit-message-button/edit-message-button';
@@ -15,3 +16,9 @@ export default function ChatMessage(props) {
     </li>
   );
 }
+
+ChatMessage.propTypes = {
+  message: PropTypes.objectOf(PropTypes.object).isRequired,
+  userName: PropTypes.string.isRequired,
+  messageNumber: PropTypes.string.isRequired,
+};

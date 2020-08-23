@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 
@@ -9,44 +9,37 @@ import Main from './blocks/site-blocks/main/main';
 
 import { setItemToLocalStorage, removeItemFromLocalStorage, getItemFromLocalStorage } from './blocks/utils/local-storage-functions';
 
-class Index extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { login: false, userName: null };
+function Index() {
+  const [authorizationStatus, setAuthorizationStatus] = useState(false);
+  const [userName, setUserName] = useState(null);
 
-    this.changeLoginStatus = this.changeLoginStatus.bind(this);
-  }
-
-  componentDidMount() {
-    if (getItemFromLocalStorage('userName')) {
-      this.setState((prevState) => ({ userName: getItemFromLocalStorage('userName'), login: !prevState.login }));
+  useEffect(() => {
+    if (getItemFromLocalStorage('userName') && !authorizationStatus) {
+      changeAuthorizationStatus();
+      setUserName(getItemFromLocalStorage('userName'));
     }
-  }
+  });
 
-  changeLoginStatus(userName) {
-    const { login } = this.state;
-    if (!login) {
-      setItemToLocalStorage('userName', userName);
-      this.changeUserName(userName);
+  function logInLogOut(commingUserName) {
+    if (!authorizationStatus) {
+      setItemToLocalStorage('userName', commingUserName);
+      setUserName(commingUserName);
     } else {
       removeItemFromLocalStorage('userName');
     }
-    this.setState((prevState) => ({ login: !prevState.login }));
+    changeAuthorizationStatus();
   }
 
-  changeUserName(userName) {
-    this.setState({ userName });
+  function changeAuthorizationStatus() {
+    setAuthorizationStatus((prevState) => !prevState);
   }
 
-  render() {
-    const { login, userName } = this.state;
-    return (
-      <>
-        <Header loginStatus={login} userName={userName} changeLoginStatus={this.changeLoginStatus} />
-        {login && <Main userName={userName} />}
-      </>
-    );
-  }
+  return (
+    <>
+      <Header authorizationStatus={authorizationStatus} userName={userName} logInLogOut={logInLogOut} />
+      {authorizationStatus && <Main userName={userName} />}
+    </>
+  );
 }
 
 ReactDOM.render(<HashRouter><Index /></HashRouter>, document.getElementById('root'));

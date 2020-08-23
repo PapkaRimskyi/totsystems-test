@@ -1,85 +1,92 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import Chat from '../../../universal-items/universal-blocks/chat/chat';
 import ChatWriteMessage from '../../../universal-items/universal-blocks/chat-write-message/chat-write-message';
 import floodData from '../../../universal-items/universal-blocks/chat/model/flood-chat-data';
 import workData from '../../../universal-items/universal-blocks/chat/model/work-chat-data';
 
-export default class Room extends Component {
-  constructor(props) {
-    super(props);
+export default function Room({ activeChatName, userName }) {
+  const [floodDataMessage, setFloodDataMessage] = useState(floodData);
+  const [workDataMessage, setWorkDataMessage] = useState(workData);
+  const [editModeStatus, setEditModeStatus] = useState(false);
+  const [editingMessageData, setEditingMessageData] = useState({ editingText: '', editingMessageID: null });
 
-    this.state = { floodDataMessage: floodData, workDataMessage: workData, editModeStatus: false, editingMessageData: { editingText: '', editingMessageID: null } };
+  useEffect(() => {
+    setEditModeStatus(false);
+    setEditingMessageData({ editingText: '', editingMessageID: null });
+  }, [activeChatName]);
 
-    this.addMessage = this.addMessage.bind(this);
-    this.messageActionButtonHandler = this.messageActionButtonHandler.bind(this);
-    this.changeEditedMessage = this.changeEditedMessage.bind(this);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.activeChat !== this.props.activeChat) {
-      this.setState({ editModeStatus: false, editingMessageData: { editingText: '', editingMessageID: null } });
+  useEffect(() => {
+    if (editModeStatus) {
+      dropEditModeAndEditMessageToDefault();
     }
-  }
+  }, [floodDataMessage, workDataMessage]);
 
-  messageActionButtonHandler(e) {
+  function messageActionButtonHandler(e) {
     e.preventDefault();
     if (e.target.closest('.message-action-button')) {
       const button = e.target.closest('.message-action-button');
       if (button.classList.contains('message-action-button--delete-button')) {
-        this.deleteMessage(button);
+        deleteMessage(button);
       } else if (button.classList.contains('message-action-button--edit-button')) {
-        this.editMessageInit(button);
+        editMessageInit(button);
       }
     }
   }
 
-  addMessage(formData) {
-    const { activeChat } = this.props;
-    return activeChat === 'flood' ? this.setState((prevState) => ({ floodDataMessage: [...prevState.floodDataMessage, formData] }))
-      : this.setState((prevState) => ({ workDataMessage: [...prevState.workDataMessage, formData] }));
-  }
-
-  deleteMessage(button) {
-    const { floodDataMessage, workDataMessage } = this.state;
-    const { activeChat } = this.props;
-    const copyMessageList = activeChat === 'flood' ? floodDataMessage.slice() : workDataMessage.slice();
-    copyMessageList.splice(button.closest('.chat__item').getAttribute('data-message-number'), 1);
-    return activeChat === 'flood' ? this.setState({ floodDataMessage: copyMessageList }) : this.setState({ workDataMessage: copyMessageList });
-  }
-
-  editMessageInit(button) {
-    const { editModeStatus } = this.state;
-    const parentElement = button.closest('.chat__item');
-    if (!editModeStatus) {
-      this.setState((prevState) => ({
-        editModeStatus: !prevState.editModeStatus,
-        editingMessageData: { editingText: parentElement.querySelector('.chat__message').textContent, editingMessageID: parentElement.getAttribute('data-message-number') },
-      }));
+  function addMessage(formData) {
+    if (activeChatName === 'flood') {
+      setFloodDataMessage((prevState) => [...prevState, formData]);
+    } else {
+      setWorkDataMessage((prevState) => [...prevState, formData]);
     }
   }
 
-  changeEditedMessage(correctedMessageText) {
-    const { floodDataMessage, workDataMessage } = this.state;
-    const { editingMessageID } = this.state.editingMessageData;
-    const { activeChat } = this.props;
-    const copyMessageList = activeChat === 'flood' ? floodDataMessage.slice() : workDataMessage.slice();
+  function editMessageInit(button) {
+    const parentElement = button.closest('.chat__item');
+    if (!editModeStatus) {
+      setEditModeStatus((prevState) => !prevState);
+      setEditingMessageData({ editingText: parentElement.querySelector('.chat__message').textContent, editingMessageID: parentElement.getAttribute('data-message-number') });
+    }
+  }
+
+  function changeEditedMessage(correctedMessageText) {
+    const { editingMessageID } = editingMessageData;
+    const copyMessageList = activeChatName === 'flood' ? floodDataMessage.slice() : workDataMessage.slice();
     copyMessageList[editingMessageID].message = correctedMessageText;
-    return activeChat === 'flood' ? this.setState({ floodDataMessage: copyMessageList }, this.dropEditSettingsToDefault) : this.setState({ workDataMessage: copyMessageList }, this.dropEditSettingsToDefault);
+    if (activeChatName === 'flood') {
+      setFloodDataMessage(copyMessageList);
+    } else {
+      setWorkDataMessage(copyMessageList);
+    }
   }
 
-  dropEditSettingsToDefault() {
-    this.setState((prevState) => ({ editModeStatus: !prevState.editModeStatus, editingMessageData: { editingText: '', editingMessageID: null } }));
+  function deleteMessage(button) {
+    const copyMessageList = activeChatName === 'flood' ? floodDataMessage.slice() : workDataMessage.slice();
+    copyMessageList.splice(button.closest('.chat__item').getAttribute('data-message-number'), 1);
+    if (activeChatName === 'flood') {
+      setFloodDataMessage(copyMessageList);
+    } else {
+      setWorkDataMessage(copyMessageList);
+    }
+    dropEditModeAndEditMessageToDefault();
   }
 
-  render() {
-    const { activeChat, userName } = this.props;
-    const { floodDataMessage, workDataMessage, editModeStatus, editingMessageData } = this.state;
-    return (
-      <section className="room" aria-label="Комната">
-        <Chat userName={userName} chatInfo={activeChat === 'flood' ? floodDataMessage : workDataMessage} messageActionButtonHandler={this.messageActionButtonHandler} />
-        <ChatWriteMessage addMessage={this.addMessage} changeEditedMessage={this.changeEditedMessage} editModeStatus={editModeStatus} editingMessageData={editingMessageData} activeChat={activeChat} userName={userName} />
-      </section>
-    );
+  function dropEditModeAndEditMessageToDefault() {
+    setEditModeStatus(false);
+    setEditingMessageData({ editingText: '', editingMessageID: null });
   }
+
+  return (
+    <section className="room" aria-label="Комната">
+      <Chat chatInfo={activeChatName === 'flood' ? floodDataMessage : workDataMessage} userName={userName} messageActionButtonHandler={messageActionButtonHandler} />
+      <ChatWriteMessage addMessage={addMessage} changeEditedMessage={changeEditedMessage} editModeStatus={editModeStatus} editingMessageData={editingMessageData} activeChatName={activeChatName} userName={userName} />
+    </section>
+  );
 }
+
+Room.propTypes = {
+  activeChatName: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+};

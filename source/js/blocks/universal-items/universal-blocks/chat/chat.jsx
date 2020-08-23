@@ -1,39 +1,37 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable react/jsx-no-bind */
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import ChatMessage from '../chat-message/chat-message';
 
 import scrollToBottom from '../../../utils/scrollToBottom';
 
-export default class Chat extends Component {
-  constructor(props) {
-    super(props);
+export default function Chat({ chatInfo, userName, messageActionButtonHandler }) {
+  const [chatList, setChatList] = useState(null);
 
-    this.chatList = null;
-  }
+  useEffect(() => {
+    setChatList(document.querySelector('.chat__list'));
+  }, []);
 
-  componentDidMount() {
-    this.chatList = document.querySelector('.chat__list');
-    scrollToBottom(this.chatList);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.chatInfo !== this.props.chatInfo) {
-      scrollToBottom(this.chatList);
+  useEffect(() => {
+    if (chatList) {
+      scrollToBottom(chatList);
     }
-  }
+  }, [chatList, chatInfo]);
 
-  render() {
-    const { chatInfo, userName, messageActionButtonHandler } = this.props;
-    return (
-      <section className="chat" aria-label="Раздел с чатом">
-        <ul className="chat__list" onClick={messageActionButtonHandler}>
-          {chatInfo.map((message, index) => <ChatMessage userName={userName} messageNumber={`${index}`} key={index} message={message} messageID={index} />)}
-        </ul>
-      </section>
-    );
-  }
+  return (
+    <section className="chat" aria-label="Раздел с чатом">
+      <ul className="chat__list" onClick={messageActionButtonHandler}>
+        {chatInfo.map((message, index) => <ChatMessage key={index} userName={userName} messageNumber={`${index}`} message={message} />)}
+      </ul>
+    </section>
+  );
 }
+
+Chat.propTypes = {
+  chatInfo: PropTypes.arrayOf(PropTypes.array).isRequired,
+  userName: PropTypes.string.isRequired,
+  messageActionButtonHandler: PropTypes.func.isRequired,
+};

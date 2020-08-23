@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function InformationBlock({ information }) {
   return (
@@ -7,3 +8,7 @@ export default function InformationBlock({ information }) {
     </section>
   );
 }
+
+InformationBlock.propTypes = {
+  information: PropTypes.string.isRequired,
+};

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 export default function ChatsPannel({ pannelHandler }) {
@@ -17,3 +18,7 @@ export default function ChatsPannel({ pannelHandler }) {
     </nav>
   );
 }
+
+ChatsPannel.propTypes = {
+  pannelHandler: PropTypes.func.isRequired,
+};

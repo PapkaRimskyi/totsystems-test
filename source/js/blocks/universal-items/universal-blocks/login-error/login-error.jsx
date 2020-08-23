@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-export default class LoginError extends Component {
-  constructor(props) {
-    super(props);
+export default function LoginError({ changeErrorStatus }) {
+  let timeoutTimer = null;
 
-    this.timeoutTimer = null;
-  }
+  useEffect(() => {
+    timeoutTimer = setTimeout(() => clearErrorTimeout(), 2000);
+  });
 
-  componentDidMount() {
-    this.timeoutTimer = setTimeout(() => this.clearErrorTimeout(), 3000);
-  }
-
-  clearErrorTimeout() {
-    const { changeErrorStatus } = this.props;
-    clearTimeout(this.timeoutTimer);
+  function clearErrorTimeout() {
+    clearTimeout(timeoutTimer);
     changeErrorStatus();
   }
 
-  render() {
-    return (
-      <p className="login-error">Неправильный логин или пароль</p>
-    );
-  }
+  return (
+    <p className="login-error">Неправильный логин или пароль</p>
+  );
 }
+
+LoginError.propTypes = {
+  changeErrorStatus: PropTypes.func.isRequired,
+};

@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function MessageListAction({ actionButtons }) {
   return (
@@ -10,3 +11,7 @@ export default function MessageListAction({ actionButtons }) {
     </ul>
   );
 }
+
+MessageListAction.propTypes = {
+  actionButtons: PropTypes.arrayOf(PropTypes.array).isRequired,
+};
