@@ -3,6 +3,7 @@
 
   &__list {
     display: flex;
+    align-items: center;
   }
 
   &__item {
@@ -16,6 +17,7 @@
     line-height: 26px;
     color: $black-color;
     background-color: #c4b0d1;
+    text-align: center;
     border-radius: 3px;
     transition: color, background-color, opacity, .3s ease-in-out;
 

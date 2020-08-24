@@ -31,7 +31,7 @@ export default function LoginPopup({ popupCrossHandler, logInLogOut }) {
       <CrossButton onClickHandler={popupCrossHandler} />
       <form className="login-popup__form" method="post" onSubmit={checkFormData}>
         <fieldset className="login-popup__inputs-container">
-          <legend className="login-popup__fieldset-name">Заполните все поля для авторизации</legend>
+          <legend className="login-popup__fieldset-name">Авторизация</legend>
           <ul className="login-popup__list">
             <li className="login-popup__item">
               <input type="text" className="login-popup__input" id="login" name="login" placeholder="Логин" title="Введите свой логин" required />

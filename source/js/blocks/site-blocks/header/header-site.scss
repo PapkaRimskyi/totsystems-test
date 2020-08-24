@@ -2,24 +2,55 @@
   position: relative;
   margin: $margin-auto;
   padding: 25px 0;
-  width: $desktop-container-width;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: $mobile-container-width;
+
+  &__company-name {
+    margin-bottom: 20px;
+    line-height: 36px;
+    text-align: center;
+    text-shadow: 4px -2px 5px #816e6e;
+  }
 
   &__user-information {
-    width: 30%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
   }
 
   &__went-in-like {
+    margin-bottom: 20px;
     font-size: 18px;
     line-height: 24px;
+    word-break: break-all;
 
     & > span {
       font-weight: 700;
+    }
+  }
+}
+
+@media screen and (min-width: $tablet-width) {
+  .header {
+    width: $tablet-container-width;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__company-name {
+      margin-bottom: 0;
+      width: 40%;
+    }
+
+    &__user-information {
+      max-width: 30%;
+    }
+  }
+}
+
+@media screen and (min-width: $desktop-width) and (orientation: landscape) {
+  .header {
+    width: $desktop-container-width;
+
+    &__company-name {
+      text-align: justify;
     }
   }
 }

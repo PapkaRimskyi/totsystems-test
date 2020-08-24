@@ -1,5 +1,11 @@
 .room {
   margin: $margin-auto;
-  width: $tablet-container-width;
+  width: $mobile-container-width;
   border: 2px solid $black-color;
+}
+
+@media screen and (min-width: $tablet-width) {
+  .room {
+    width: $tablet-container-width;
+  }
 }

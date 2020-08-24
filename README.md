@@ -45,3 +45,9 @@
 
   ### UPD
   Переделан с использованием React Hooks. Так же использовал PropTypes.
+  Адаптив.
+
+  ### Стэк технологий.
+  HTML/CSS(SASS).
+  JS, React, React Hooks, CSSTRansition, React Router, PropTypes (для типизации пропсов).
+  Webpack.

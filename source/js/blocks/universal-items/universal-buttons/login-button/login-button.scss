@@ -1,6 +1,6 @@
 .login-button {
   padding: 15px 25px;
-  min-width: 100px;
+  min-width: 100%;
   color: $white-color;
   background-color: $twitter-color;
   transition: background-color .3s ease-in-out;
@@ -12,5 +12,11 @@
 
   &:active {
     background-color: $facebook-state-hover;
+  }
+}
+
+@media screen and (min-width: $tablet-width) {
+  .login-button {
+    min-width: 100px;
   }
 }
