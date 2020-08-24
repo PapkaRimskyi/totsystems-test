@@ -13,5 +13,5 @@ export default function MessageListAction({ actionButtons }) {
 }
 
 MessageListAction.propTypes = {
-  actionButtons: PropTypes.arrayOf(PropTypes.array).isRequired,
+  actionButtons: PropTypes.arrayOf(PropTypes.element).isRequired,
 };

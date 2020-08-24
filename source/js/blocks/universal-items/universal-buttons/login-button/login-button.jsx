@@ -9,10 +9,6 @@ export default function LoginButton({ buttonName, ariaLabel, onClickHandler }) {
 
 LoginButton.propTypes = {
   buttonName: PropTypes.string.isRequired,
-  ariaLabel: PropTypes.string,
+  ariaLabel: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func.isRequired,
-};
-
-LoginButton.defaultProps = {
-  ariaLabel: 'Логин кнопка',
 };

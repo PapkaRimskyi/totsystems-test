@@ -31,7 +31,7 @@ export default function Chat({ chatInfo, userName, messageActionButtonHandler })
 }
 
 Chat.propTypes = {
-  chatInfo: PropTypes.arrayOf(PropTypes.array).isRequired,
+  chatInfo: PropTypes.arrayOf(PropTypes.object).isRequired,
   userName: PropTypes.string.isRequired,
   messageActionButtonHandler: PropTypes.func.isRequired,
 };

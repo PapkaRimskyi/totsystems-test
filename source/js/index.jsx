@@ -11,7 +11,7 @@ import { setItemToLocalStorage, removeItemFromLocalStorage, getItemFromLocalStor
 
 function Index() {
   const [authorizationStatus, setAuthorizationStatus] = useState(false);
-  const [userName, setUserName] = useState(null);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     if (getItemFromLocalStorage('userName') && !authorizationStatus) {

@@ -59,7 +59,10 @@ ChatWriteMessage.propTypes = {
   addMessage: PropTypes.func.isRequired,
   changeEditedMessage: PropTypes.func.isRequired,
   editModeStatus: PropTypes.bool.isRequired,
-  editingMessageData: PropTypes.objectOf(PropTypes.object).isRequired,
+  editingMessageData: PropTypes.shape({
+    editingText: PropTypes.string.isRequired,
+    editingMessageID: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  }).isRequired,
   activeChatName: PropTypes.string.isRequired,
   userName: PropTypes.string.isRequired,
 };

@@ -8,7 +8,7 @@ import Room from './room/room';
 import InformationBlock from '../../universal-items/universal-blocks/information-block/information-block';
 
 export default function Main({ userName }) {
-  const [activeChatName, setActiveChatNameStatus] = useState(null);
+  const [activeChatName, setActiveChatNameStatus] = useState('');
 
   function chatsPannelHandler(e) {
     e.preventDefault();

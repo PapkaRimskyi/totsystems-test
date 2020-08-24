@@ -18,7 +18,7 @@ export default function ChatMessage(props) {
 }
 
 ChatMessage.propTypes = {
-  message: PropTypes.objectOf(PropTypes.object).isRequired,
+  message: PropTypes.objectOf(PropTypes.string).isRequired,
   userName: PropTypes.string.isRequired,
   messageNumber: PropTypes.string.isRequired,
 };

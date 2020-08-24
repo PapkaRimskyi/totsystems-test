@@ -8,5 +8,9 @@ export default function SubmitButton({ errorStatus }) {
 }
 
 SubmitButton.propTypes = {
-  errorStatus: PropTypes.bool.isRequired,
+  errorStatus: PropTypes.bool,
+};
+
+SubmitButton.defaultProps = {
+  errorStatus: false,
 };
